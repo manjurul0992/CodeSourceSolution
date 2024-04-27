@@ -31,4 +31,10 @@ $(document).on("click", "#DeleteFormat", function (e) {
 
     // Remove the format row
     formatRow.remove();
+
+    //// Check if there's one format row remaining after deletion
+    //if ($("#FormatContainer").children().length === 1) {
+    //    // Disable the Delete button if there's only one row left
+    //    $("#DeleteFormat").prop("disabled", true);
+    //}
 });

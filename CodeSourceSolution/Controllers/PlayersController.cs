@@ -70,15 +70,24 @@ namespace CodeSourceSolution.Controllers
             };
             string webroot = _environment.WebRootPath;
 
+
+            string imagesFolder = Path.Combine(webroot, "images");
+            // Create the images folder if it doesn't exist
+            if (!Directory.Exists(imagesFolder))
+            {
+                Directory.CreateDirectory(imagesFolder);
+            }
+
+
             string pictureFileName = Path.GetFileName(playerVM.PicturePath.FileName);
-            string fileToSave = Path.Combine(webroot, pictureFileName);
+            string fileToSave = Path.Combine(imagesFolder, pictureFileName);
 
             using (var stream = new FileStream(fileToSave, FileMode.Create))
             {
-                playerVM.PicturePath.CopyTo(stream);
-                player.Picture = "/" + pictureFileName;
+               await playerVM.PicturePath.CopyToAsync(stream);
+                player.Picture = "/images/" + pictureFileName;
             }
-
+            _context.Players.Add(player);
 
             foreach (var item in FormatId)
             {
@@ -96,6 +105,12 @@ namespace CodeSourceSolution.Controllers
 
 
         }
+
+
+
+
+
+
 
 
 

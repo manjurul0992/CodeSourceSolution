@@ -28,7 +28,8 @@
                     <td><img src="@item.Picture" width="80" /></td>
                     <td>@Html.DisplayFor(x => item.PlayerName)</td>
                     <td>@Html.DisplayFor(x => item.DateOfBirth)</td>
-                    <td>@Html.DisplayFor(x => item.Phone)</td>
+                    <td>@(string.IsNullOrEmpty(item.Phone) ? "N/A" : item.Phone)</td>
+
                     <td>
                         @if (item.MaritalStatus == true)
                         {

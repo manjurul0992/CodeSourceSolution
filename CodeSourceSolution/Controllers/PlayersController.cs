@@ -13,22 +13,42 @@ namespace CodeSourceSolution.Controllers
 {
     public class PlayersController : Controller
     {
-        private readonly PlayerDbContext? _Context;
-        private  IWebHostEnvironment? _Environment;
+        private readonly PlayerDbContext? _context;
+        private  IWebHostEnvironment? _environment;
 
         public PlayersController(PlayerDbContext context, IWebHostEnvironment environment)
         {
-            this._Context = context;
-            this._Environment = environment;
+            this._context = context;
+            this._environment = environment;
         }
         public async Task<IActionResult> Index()
         {
-            return View(await _Context.Players.Include(x => x.SeriesEntries).ThenInclude(y => y.Format).ToListAsync());
+            return View(await _context.Players.Include(x => x.SeriesEntries).ThenInclude(y => y.Format).ToListAsync());
         }
+
+
+
+
+        //public async Task<IActionResult> Index()
+        //{
+        //    var players = (from player in _context.Players
+        //                   join seriesEntry in _context.SeriesEntries on player.PlayerId equals seriesEntry.PlayerId
+        //                   join format in _context.Formats on seriesEntry.FormatId equals format.FormatId
+        //                   select player).ToListAsync();
+
+        //    return View(await players);
+        //}
+
+
+
+
+
+
+
 
         public IActionResult AddNewFormats(int? id)
         {
-            ViewBag.format = new SelectList(_Context.Formats, "FormatId", "FormatName", id.ToString() ?? "");
+            ViewBag.format = new SelectList(_context.Formats, "FormatId", "FormatName", id.ToString() ?? "");
             return PartialView("_addNewFormats");
         }
 
@@ -48,7 +68,7 @@ namespace CodeSourceSolution.Controllers
                 MaritalStatus = (bool)playerVM.MaritalStatus
 
             };
-            string webroot = _Environment.WebRootPath;
+            string webroot = _environment.WebRootPath;
 
             string pictureFileName = Path.GetFileName(playerVM.PicturePath.FileName);
             string fileToSave = Path.Combine(webroot, pictureFileName);
@@ -68,10 +88,10 @@ namespace CodeSourceSolution.Controllers
                     PlayerId = player.PlayerId,
                     FormatId = item
                 };
-                _Context.SeriesEntries.Add(playerFormats);
+                _context.SeriesEntries.Add(playerFormats);
 
             }
-            await _Context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
 
 
@@ -81,7 +101,7 @@ namespace CodeSourceSolution.Controllers
 
         public async Task<IActionResult> Edit(int id)
         {
-            var player = await _Context.Players.FirstOrDefaultAsync(x => x.PlayerId == id);
+            var player = await _context.Players.FirstOrDefaultAsync(x => x.PlayerId == id);
             PlayerVM playerVM = new PlayerVM()
             {
                 PlayerId = player.PlayerId,
@@ -91,7 +111,7 @@ namespace CodeSourceSolution.Controllers
                 Picture = player.Picture,
                 MaritalStatus = (bool)player.MaritalStatus
             };
-            var existFormat = _Context.SeriesEntries.Where(x => x.PlayerId == id).ToList();
+            var existFormat = _context.SeriesEntries.Where(x => x.PlayerId == id).ToList();
             foreach (var item in existFormat)
             {
                 playerVM.FormatList.Add(item.FormatId);
@@ -116,7 +136,7 @@ namespace CodeSourceSolution.Controllers
             var file = playerVM.PicturePath;
 
 
-            string webroot = _Environment.WebRootPath;
+            string webroot = _environment.WebRootPath;
             string pictureFileName = Path.GetFileName(playerVM.PicturePath.FileName);
             string fileToSave = Path.Combine(webroot, pictureFileName);
 
@@ -127,10 +147,10 @@ namespace CodeSourceSolution.Controllers
             }
 
 
-            var existFormat = _Context.SeriesEntries.Where(x => x.PlayerId == player.PlayerId).ToList();
+            var existFormat = _context.SeriesEntries.Where(x => x.PlayerId == player.PlayerId).ToList();
             foreach (var item in existFormat)
             {
-                _Context.SeriesEntries.Remove(item);
+                _context.SeriesEntries.Remove(item);
             }
             foreach (var item in FormatId)
             {
@@ -140,11 +160,11 @@ namespace CodeSourceSolution.Controllers
                     PlayerId = player.PlayerId,
                     FormatId = item
                 };
-                _Context.SeriesEntries.Add(seriesEntry);
+                _context.SeriesEntries.Add(seriesEntry);
 
             }
-            _Context.Update(player);
-            await _Context.SaveChangesAsync();
+            _context.Update(player);
+            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
 
 
@@ -156,7 +176,7 @@ namespace CodeSourceSolution.Controllers
         {
 
 
-            var player = await _Context.Players.FirstOrDefaultAsync(x => x.PlayerId == id);
+            var player = await _context.Players.FirstOrDefaultAsync(x => x.PlayerId == id);
             PlayerVM playerVM = new PlayerVM()
             {
                 PlayerId = player.PlayerId,
@@ -166,7 +186,7 @@ namespace CodeSourceSolution.Controllers
                 Picture = player.Picture,
                 MaritalStatus = (bool)player.MaritalStatus
             };
-            var existFormat = _Context.SeriesEntries.Where(x => x.PlayerId == id).ToList();
+            var existFormat = _context.SeriesEntries.Where(x => x.PlayerId == id).ToList();
             foreach (var item in existFormat)
             {
                 playerVM.FormatList.Add(item.FormatId);
@@ -177,18 +197,20 @@ namespace CodeSourceSolution.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int? id)
         {
-            var player = await _Context.Players.FirstOrDefaultAsync(x => x.PlayerId == id);
-            var existFormat = _Context.SeriesEntries.Where(x => x.PlayerId == id).ToList();
+            var player = await _context.Players.FirstOrDefaultAsync(x => x.PlayerId == id);
+            var existFormat = _context.SeriesEntries.Where(x => x.PlayerId == id).ToList();
             foreach (var item in existFormat)
             {
-                _Context.SeriesEntries.Remove(item);
+                _context.SeriesEntries.Remove(item);
             }
-            _Context.Remove(player);
-            await _Context.SaveChangesAsync();
+            _context.Remove(player);
+            await _context.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index));
         }
 
 
     }
+
+  
 }

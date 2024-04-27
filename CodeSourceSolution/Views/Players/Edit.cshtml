@@ -8,7 +8,7 @@
 <div class="container">
     <form asp-action="Edit" asp-controller="Players" method="post" enctype="multipart/form-data">
         <div class="row">
-            <div class="col-6">
+            <div class="col-6 mt-2">
                 <div asp-validation-summary="ModelOnly"></div>
                 <input asp-for="PlayerId" type="hidden" />
                 <input asp-for="Picture" type="hidden" />
@@ -73,3 +73,8 @@
         </div>
     </form>
 </div>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

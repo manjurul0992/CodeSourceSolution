@@ -14,7 +14,7 @@ namespace CodeSourceSolution.Models
         }
 
         public virtual DbSet<Format>? Formats { get; set; }
-        public virtual DbSet<Player>? Players { get; set; }
+        public virtual DbSet<Player> Players { get; set; }
         public virtual DbSet<SeriesEntry>? SeriesEntries { get; set; }
 
 

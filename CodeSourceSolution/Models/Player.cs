@@ -12,11 +12,12 @@ namespace CodeSourceSolution.Models
             SeriesEntries = new HashSet<SeriesEntry>();
         }
         public int PlayerId { get; set; }
-        [Required, StringLength(100), Display(Name = "Player Name")]
+        [Required(ErrorMessage = "Please provide the picture."), StringLength(100), Display(Name = "Player Name")]
+        
         public string? PlayerName { get; set; }
         [Required, Column(TypeName = "date"), DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        public DateTime? DateOfBirth { get; set; }
-        [Required, StringLength(100), Display(Name = "Phone Number")]
+        public DateTime DateOfBirth { get; set; } 
+        [StringLength(100), Display(Name = "Phone Number")]
         public string? Phone { get; set; }
         [Required, StringLength(100), Display(Name = "Picture")]
         public string? Picture { get; set; }

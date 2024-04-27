@@ -6,12 +6,13 @@
 <h1 class="text-center">Add Player</h1>
 <div class="container">
     <form asp-action="Create" asp-controller="Players" method="post" enctype="multipart/form-data">
+        
         <div class="row">
-            <div class="col-6">
+            <div class="col-6 mt-2">
                 <!-- ... -->
                 <div class="form-group">
-                    <label for="PlayerName" class="custom-label">Player Name</label>
-                    <input asp-for="PlayerName" class="form-control" id="PlayerName" />
+                    <label asp-for="PlayerName" class="custom-label"></label>
+                    <input asp-for="PlayerName" type="text" class="form-control" id="PlayerName"/>
                     <span asp-validation-for="PlayerName" class="text-danger"></span>
                 </div>
 
@@ -27,11 +28,14 @@
                     <span asp-validation-for="Phone" class="text-danger"></span>
                 </div>
 
+                
                 <div class="form-group">
                     <label for="PicturePath">Picture Path</label>
-                    <input asp-for="PicturePath" class="form-control" id="PicturePath" />
+                    <input asp-for="PicturePath" class="form-control" id="PicturePath" required />
                     <span asp-validation-for="PicturePath" class="text-danger"></span>
                 </div>
+
+
 
                 <div class="form-group">
                     <label for="MaritalStatus">Marital Status</label>
@@ -46,17 +50,24 @@
                 <a id="btnAdd" class="d-flex justify-content-end"><b class="btn btn-outline-warning fa fa-plus"></b></a>
 
 
-                <div class="col-11 offset-0">
+               
                     <div id="FormatContainer">
                         <script>
                             LoadData();
                         </script>
                     </div>
-                </div>
+                
 
                
             </div>
             <button type="submit" class="btn btn-primary btn-lg btn-block">Save</button>
         </div>
+
+        
     </form>
 </div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

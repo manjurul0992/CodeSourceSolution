@@ -5,19 +5,30 @@
 
     function LoadData(FormatId = null) {
         var FormatContainer = $("#FormatContainer")
-    $.ajax({
-        url: "/Players/AddNewFormats/" + FormatId ?? "",
-    type: "GET",
-    success: function (data) {
-        FormatContainer.append(data);
+        $.ajax({
+            url: "/Players/AddNewFormats/" + FormatId ?? "",
+            type: "GET",
+            success: function (data) {
+                FormatContainer.append(data);
             }
-        })
+        });
     }
-    $(document).on("click", "#btnAdd", function (e) {
-        e.preventDefault();
+$(document).on("click", "#btnAdd", function (e) {
+    e.preventDefault();
     LoadData();
-    })
-    $(document).on("click", "#DeleteFormat", function (e) {
-        e.preventDefault();
-    $(this).parent().parent().remove();
-    })
+});
+$(document).on("click", "#DeleteFormat", function (e) {
+    e.preventDefault();
+
+    // Get the parent container of the clicked button (the format row)
+    var formatRow = $(this).parent().parent();
+
+    // Check if there's only one format row remaining (including the clicked one)
+    if (formatRow.siblings().length === 1) {
+        // Don't allow deletion if it's the last row
+        return;
+    }
+
+    // Remove the format row
+    formatRow.remove();
+});

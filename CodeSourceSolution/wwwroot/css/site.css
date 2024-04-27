@@ -71,3 +71,44 @@ body {
 }
 
 
+
+
+
+
+
+
+
+.sweet-table {
+    display: table;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.sweet-row {
+    display: table-row;
+}
+
+dt, dd {
+    display: table-cell;
+    padding: 8px 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+dt {
+    font-weight: bold;
+    text-align: right;
+    width: 30%;
+}
+
+dd {
+    width: 70%;
+}
+.table {
+    border: 1px solid black;
+}
+
+th, td {
+    border: 1px solid black;
+    padding: 5px; /* Add padding for better spacing */
+}
+

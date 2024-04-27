@@ -150,6 +150,45 @@ namespace CodeSourceSolution.Controllers
 
         }
 
+        
+
+        public async Task<IActionResult> Delete(int id)
+        {
+
+
+            var player = await _Context.Players.FirstOrDefaultAsync(x => x.PlayerId == id);
+            PlayerVM playerVM = new PlayerVM()
+            {
+                PlayerId = player.PlayerId,
+                PlayerName = player.PlayerName,
+                DateOfBirth = player.DateOfBirth,
+                Phone = player.Phone,
+                Picture = player.Picture,
+                MaritalStatus = (bool)player.MaritalStatus
+            };
+            var existFormat = _Context.SeriesEntries.Where(x => x.PlayerId == id).ToList();
+            foreach (var item in existFormat)
+            {
+                playerVM.FormatList.Add(item.FormatId);
+            }
+            return View(playerVM);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Delete(int? id)
+        {
+            var player = await _Context.Players.FirstOrDefaultAsync(x => x.PlayerId == id);
+            var existFormat = _Context.SeriesEntries.Where(x => x.PlayerId == id).ToList();
+            foreach (var item in existFormat)
+            {
+                _Context.SeriesEntries.Remove(item);
+            }
+            _Context.Remove(player);
+            await _Context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
+        }
+
 
     }
 }

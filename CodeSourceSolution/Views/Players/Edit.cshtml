@@ -35,7 +35,9 @@
                     <label for="PicturePath">Picture Path</label>
                     
                     <div class="row">
-                        <div class="col-6"><input asp-for="PicturePath" class="form-control" id="PicturePath" /></div>
+                        <div class="col-6">
+                            
+                            <input asp-for="Picture" class="form-control" id="PicturePath" /></div>
                         <div class="col-6 d-flex justify-content-end">
                             <img src="@Model.Picture" width="60" style="border-radius: 25%; border: 2px solid #ccc;" />
                             </div>
@@ -46,7 +48,7 @@
 
                 <div class="form-group">
                     <label for="MaritalStatus">Marital Status</label>
-                    <input asp-for="MaritalStatus" type="checkbox" id="MaritalStatus" />
+                    <input asp-for="MaritalStatus" type="checkbox" />
                     <span asp-validation-for="MaritalStatus" class="text-danger"></span>
                 </div>
                 

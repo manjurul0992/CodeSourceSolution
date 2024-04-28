@@ -14,7 +14,7 @@ namespace CodeSourceSolution.Models.ViewModels
         }
 
         public int PlayerId { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Please provide the Name."), StringLength(100), Display(Name = "Player Name")]
         public string? PlayerName { get; set; }
         
         public DateTime DateOfBirth { get; set; }

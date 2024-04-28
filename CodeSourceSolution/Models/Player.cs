@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Http;
 
 namespace CodeSourceSolution.Models
 {
@@ -12,7 +13,7 @@ namespace CodeSourceSolution.Models
             SeriesEntries = new HashSet<SeriesEntry>();
         }
         public int PlayerId { get; set; }
-        [Required(ErrorMessage = "Please provide the picture."), StringLength(100), Display(Name = "Player Name")]
+        [Required(ErrorMessage = "Please provide the Name."), StringLength(100), Display(Name = "Player Name")]
         
         public string? PlayerName { get; set; }
         [Required, Column(TypeName = "date"), DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]

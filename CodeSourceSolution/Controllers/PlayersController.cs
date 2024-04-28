@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using CodeSourceSolution.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 
 namespace CodeSourceSolution.Controllers
 {
@@ -94,7 +96,7 @@ namespace CodeSourceSolution.Controllers
 
 
 
-
+        //[Authorize]
         public async Task<IActionResult> Edit(int id)
         {
             var player = await _context.Players.FirstOrDefaultAsync(x => x.PlayerId == id);
@@ -134,13 +136,16 @@ namespace CodeSourceSolution.Controllers
 
             string webroot = _environment.WebRootPath;
             string pictureFileName = Path.GetFileName(playerVM.PicturePath.FileName);
+            //string pictureFileName = playerVM.Picture;
             string fileToSave = Path.Combine(webroot, pictureFileName);
 
-            using (var stream = new FileStream(fileToSave, FileMode.Create))
-            {
-                playerVM.PicturePath.CopyTo(stream);
-                player.Picture = "/" + pictureFileName;
-            }
+            
+                using (var stream = new FileStream(fileToSave, FileMode.Create))
+                {
+                    playerVM.PicturePath.CopyTo(stream);
+                    player.Picture = "/" + pictureFileName;
+                }
+            
 
 
             var existFormat = _context.SeriesEntries.Where(x => x.PlayerId == player.PlayerId).ToList();

@@ -1,8 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.CodeAnalysis;
+using Microsoft.EntityFrameworkCore;
 
 namespace CodeSourceSolution.Models
 {
-    public class PlayerDbContext:DbContext
+    public class PlayerDbContext:IdentityDbContext
     {
         public PlayerDbContext()
         {
@@ -35,8 +38,16 @@ namespace CodeSourceSolution.Models
                 {
                     FormatId =3,
                     FormatName = "T20"
-                }
-            );
+                });
+
+
+          
+            base.OnModelCreating(modelBuilder);
+            
+
+
+            modelBuilder.Entity<IdentityUser>().HasKey(m => m.Id);
+            
         }
     }
 }

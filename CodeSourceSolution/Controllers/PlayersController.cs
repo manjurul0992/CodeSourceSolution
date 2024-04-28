@@ -27,25 +27,6 @@ namespace CodeSourceSolution.Controllers
         }
 
 
-
-
-        //public async Task<IActionResult> Index()
-        //{
-        //    var players = (from player in _context.Players
-        //                   join seriesEntry in _context.SeriesEntries on player.PlayerId equals seriesEntry.PlayerId
-        //                   join format in _context.Formats on seriesEntry.FormatId equals format.FormatId
-        //                   select player).ToListAsync();
-
-        //    return View(await players);
-        //}
-
-
-
-
-
-
-
-
         public IActionResult AddNewFormats(int? id)
         {
             ViewBag.format = new SelectList(_context.Formats, "FormatId", "FormatName", id.ToString() ?? "");

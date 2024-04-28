@@ -38,8 +38,9 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Players" asp-action="Index">Player</a>
                         </li>
                     </ul>
+
                     
-                    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+                    <div class="navbar-collapse collapse">
                         <ul class="navbar-nav ml-auto">
                             @*If the user is signed-in display Logout link*@
                             @if (SignInManager.IsSignedIn(User))
@@ -47,21 +48,26 @@
                                 <li class="nav-item">
                                     <form method="post" asp-controller="account" asp-action="logout">
                                         <button type="submit" style="width:auto"
-                                                class="nav-link text-dark">
-                                            Logout @User.Identity.Name
+                                                class="nav-link btn btn-link py-0 text-dark">
+                                            Logout 
+
                                         </button>
                                     </form>
+                                </li>
+                                <li class="nav-item">
+                                        <text>@User.Identity.Name</text>
+
                                 </li>
                             }
                             else
                             {
                                 <li class="nav-item">
-                                    <a class="nav-link" asp-controller="account" asp-action="register">
+                                    <a class="nav-link text-dark" asp-controller="account" asp-action="register">
                                         Register
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" asp-controller="account" asp-action="login">
+                                    <a class="nav-link text-dark" asp-controller="account" asp-action="login">
                                         Login
                                     </a>
                                 </li>
